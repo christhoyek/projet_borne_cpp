@@ -1,20 +1,29 @@
-lecteurcarte.o: lecteurcarte.c lecteurcarte.h \
- /shared/TCii/include/lcarte.h voyant.h \
- /shared/TCii/include/donnees_borne.h baseclient.h mode.h
-borne.o: borne.c /shared/TCii/include/memoire_borne.h \
- /shared/TCii/include/donnees_borne.h \
- /shared/TCii/include/donnees_borne.h lecteurcarte.h \
- /shared/TCii/include/lcarte.h voyant.h Generateur_save.h baseclient.h \
- mode.h
-baseclient.o: baseclient.c baseclient.h
-voyant.o: voyant.c /shared/TCii/include/donnees_borne.h \
+lecteurcarte.o: lecteurcarte.cpp lecteurcarte.h lcarte.h \
+ /shared/TCii/include/lcarte.h bouton.h \
+ /shared/TCii/include/donnees_borne.h memoire_borne.h \
  /shared/TCii/include/memoire_borne.h \
- /shared/TCii/include/donnees_borne.h voyant.h
-prise.o: prise.c /shared/TCii/include/memoire_borne.h \
+ /shared/TCii/include/donnees_borne.h baseclient.h Generateur_save.h \
+ memoire_borne.h prise.h voyant.h mode.h
+borne.o: borne.cpp memoire_borne.h /shared/TCii/include/memoire_borne.h \
  /shared/TCii/include/donnees_borne.h \
- /shared/TCii/include/donnees_borne.h voyant.h prise.h
-timer.o: timer.c /shared/TCii/include/donnees_borne.h \
- /shared/TCii/include/mem_sh.h /shared/TCii/include/donnees.h timer.h
-Generateur_save.o: Generateur_save.c /shared/TCii/include/memoire_borne.h \
+ /shared/TCii/include/donnees_borne.h lecteurcarte.h lcarte.h \
+ /shared/TCii/include/lcarte.h bouton.h memoire_borne.h baseclient.h \
+ Generateur_save.h prise.h voyant.h mode.h
+baseclient.o: baseclient.cpp baseclient.h lcarte.h \
+ /shared/TCii/include/lcarte.h
+voyant.o: voyant.cpp voyant.h /shared/TCii/include/donnees_borne.h \
+ memoire_borne.h /shared/TCii/include/memoire_borne.h \
+ /shared/TCii/include/donnees_borne.h
+prise.o: prise.cpp prise.h memoire_borne.h \
+ /shared/TCii/include/memoire_borne.h \
  /shared/TCii/include/donnees_borne.h \
- /shared/TCii/include/donnees_borne.h voyant.h Generateur_save.h prise.h
+ /shared/TCii/include/donnees_borne.h
+timer.o: timer.cpp timer.h /shared/TCii/include/donnees_borne.h mem_sh.h \
+ /shared/TCii/include/mem_sh.h /shared/TCii/include/donnees.h
+Generateur_save.o: Generateur_save.cpp Generateur_save.h memoire_borne.h \
+ /shared/TCii/include/memoire_borne.h \
+ /shared/TCii/include/donnees_borne.h \
+ /shared/TCii/include/donnees_borne.h prise.h voyant.h
+bouton.o: bouton.cpp bouton.h /shared/TCii/include/donnees_borne.h \
+ memoire_borne.h /shared/TCii/include/memoire_borne.h \
+ /shared/TCii/include/donnees_borne.h
