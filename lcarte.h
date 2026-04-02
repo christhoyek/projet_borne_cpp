@@ -1,14 +1,17 @@
-#ifndef LOCAL_LCARTE_H
-#define LOCAL_LCARTE_H
+#ifndef LCARTE_H
+#define LCARTE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "/shared/TCii/include/lcarte.h"
+void initialisations_ports(void);
+void attente_insertion_carte(void);
+int lecture_numero_carte(void);
+void attente_retrait_carte(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // LOCAL_LCARTE_H
+#endif // LCARTE_H

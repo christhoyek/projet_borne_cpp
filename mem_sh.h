@@ -1,14 +1,16 @@
-#ifndef LOCAL_MEM_SH_H
-#define LOCAL_MEM_SH_H
+#ifndef MEM_SH_H
+#define MEM_SH_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "/shared/TCii/include/mem_sh.h"
+#include "donnees_borne.h"
+
+entrees* acces_memoire(int* shmid);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // LOCAL_MEM_SH_H
+#endif // MEM_SH_H

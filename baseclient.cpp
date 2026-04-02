@@ -252,31 +252,3 @@ bool BaseClient::interactiveModifier(int numcarte)
     }
 }
 
-/*/usr/bin/ld : lecteurcarte.o : dans la fonction « LecteurCarte::initialiser() » :
-/home/m1eea_142/projet_borne_cpp/lecteurcarte.cpp:16 : référence indéfinie vers « initialisations_ports() »
-/usr/bin/ld : lecteurcarte.o : dans la fonction « LecteurCarte::obtenirNumero() const » :
-/home/m1eea_142/projet_borne_cpp/lecteurcarte.cpp:23 : référence indéfinie vers « attente_insertion_carte() »
-/usr/bin/ld : /home/m1eea_142/projet_borne_cpp/lecteurcarte.cpp:24 : référence indéfinie vers « lecture_numero_carte() »
-/usr/bin/ld : lecteurcarte.o : dans la fonction « LecteurCarte::attendreRetrait() const » :
-/home/m1eea_142/projet_borne_cpp/lecteurcarte.cpp:30 : référence indéfinie vers « attente_retrait_carte() »
-/usr/bin/ld : lecteurcarte.o : dans la fonction « LecteurCarte::reauthentifierPourRecuperation() » :
-/home/m1eea_142/projet_borne_cpp/lecteurcarte.cpp:68 : référence indéfinie vers « attente_insertion_carte() »
-/usr/bin/ld : /home/m1eea_142/projet_borne_cpp/lecteurcarte.cpp:69 : référence indéfinie vers « lecture_numero_carte() »
-/usr/bin/ld : lecteurcarte.o : dans la fonction « LecteurCarte::lireCarte() » :
-/home/m1eea_142/projet_borne_cpp/lecteurcarte.cpp:87 : référence indéfinie vers « attente_insertion_carte() »
-/usr/bin/ld : /home/m1eea_142/projet_borne_cpp/lecteurcarte.cpp:90 : référence indéfinie vers « lecture_numero_carte() »
-/usr/bin/ld : baseclient.o : dans la fonction « BaseClient::demanderRetraitCarte() const » :
-/home/m1eea_142/projet_borne_cpp/baseclient.cpp:16 : référence indéfinie vers « attente_retrait_carte() »
-/usr/bin/ld : voyant.o : dans la fonction « Voyant::initialiser() » :
-/home/m1eea_142/projet_borne_cpp/voyant.cpp:13 : référence indéfinie vers « acces_memoire(int*) »
-/usr/bin/ld : prise.o : dans la fonction « Prise::initialiser() » :
-/home/m1eea_142/projet_borne_cpp/prise.cpp:13 : référence indéfinie vers « acces_memoire(int*) »
-/usr/bin/ld : timer.o : dans la fonction « Timer::initialiser() » :
-/home/m1eea_142/projet_borne_cpp/timer.cpp:13 : référence indéfinie vers « acces_memoire(int*) »
-/usr/bin/ld : Generateur_save.o : dans la fonction « Generateur::initialiser() » :
-/home/m1eea_142/projet_borne_cpp/Generateur_save.cpp:16 : référence indéfinie vers « acces_memoire(int*) »
-/usr/bin/ld : bouton.o : dans la fonction « Bouton::initialiser() » :
-/home/m1eea_142/projet_borne_cpp/bouton.cpp:12 : référence indéfinie vers « acces_memoire(int*) »
-collect2: erreur: ld a retourné le statut de sortie 1
-make: *** [Makefile:30 : borne] Erreur 1
-*/

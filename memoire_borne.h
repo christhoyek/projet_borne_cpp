@@ -1,14 +1,16 @@
-#ifndef LOCAL_MEMOIRE_BORNE_H
-#define LOCAL_MEMOIRE_BORNE_H
+#ifndef MEMOIRE_BORNE_H
+#define MEMOIRE_BORNE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "/shared/TCii/include/memoire_borne.h"
+#include "donnees_borne.h"
+
+entrees* acces_memoire(int* shmid);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // LOCAL_MEMOIRE_BORNE_H
+#endif
