@@ -1,54 +1,30 @@
-/**
- * @file Generateur_save.h
- * @brief Interface du générateur de tension
- * 
- * Déclare les fonctions pour contrôler le générateur de tension,
- * gérer le processus de charge et la récupération du véhicule.
- * 
- * @author Christian HOYEK et Julian DUBOSCLARD
- * @date 2026
- */
+#ifndef GENERATEUR_SAVE_H
+#define GENERATEUR_SAVE_H
 
-#ifndef GENERATEUR_H
-#define GENERATEUR_H
+#include <memoire_borne.h>
+#include <donnees_borne.h>
+#include "prise.h"
+#include "voyant.h"
 
-/**
- * @brief Initialise le générateur
- * @return void
- */
-void Generateur_save_initialisation (void);
+class Generateur
+{
+private:
+    entrees* io;
+    int shmid;
+    bool etatPrise;
+    Prise prise;
+    Voyant& voyant;
 
-/**
- * @brief Gère le processus de chargement du véhicule
- * @return void
- */
-void Generateur_save_chargement_VH(void);
+public:
+    explicit Generateur(Voyant& v);
 
-/**
- * @brief Gère la récupération du véhicule
- * @return void
- */
-void Gnenerateur_save_recuperation_VH(void);
+    void initialiser();
+    void chargementVH();
+    void recuperationVH();
 
-/**
- * @brief Génère une tension spécifique
- * @param tension Type de tension à générer
- * @return void
- */
-void Generateur_save_Gentension(pwm tension);
+    void genererTension(pwm tension);
+    int lireTension() const;
+    void setACEtat(int etat);
+};
 
-/**
- * @brief Mesure la tension actuelle
- * @return Valeur de la tension mesurée
- */
-int Generateur_save_Valtension(void);
-
-/**
- * @brief Contrôle l'état du contacteur AC
- * @param etat État du contacteur (0 = ouvert, 1 = fermé)
- * @return void
- */
-void Generateur_save_ACEtat(int etat);
-
-#endif 
-// GENERATEUR_H
+#endif // GENERATEUR_SAVE_H

@@ -12,7 +12,7 @@
 #
 
 TARGET = borne
-CC = gcc
+CC = g++
 CFLAGS = -Wall -O -g 
 
 #Version materielle
@@ -22,15 +22,15 @@ LIBDIRS = -L /shared/TCii/lib
 #dependance librairie libsmartcard_borne (voir git)
 LIBS64 = -lsmartcard_borne_x64 -lpcsclite
 
-SRCS = lecteurcarte.c borne.c baseclient.c voyant.c prise.c timer.c Generateur_save.c bouton.c
+SRCS = lecteurcarte.cpp borne.cpp baseclient.cpp voyant.cpp prise.cpp timer.cpp Generateur_save.cpp bouton.cpp
 
-OBJS = ${SRCS:.c=.o} 
+OBJS = ${SRCS:.cpp=.o} 
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLDIRS) $(LIBDIRS) -o $@ $(OBJS) $(LIBS64)
 
 $(OBJS):
-	$(CC) $(CFLAGS) $(INCLDIRS) $(LIBDIRS) -c $*.c
+	$(CC) $(CFLAGS) $(INCLDIRS) $(LIBDIRS) -c $*.cpp
 
 
 depend:

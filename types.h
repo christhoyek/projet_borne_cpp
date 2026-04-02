@@ -7,7 +7,7 @@
  * Il est préférable d'utiliser directement <donnees_borne.h>.
  * 
  * @deprecated Utiliser <donnees_borne.h> directement
- * @author Christian HOYEK et Julian DUBOSCLARD
+ * @author Christian HOYEK 
  * @date 2026
  */
 
