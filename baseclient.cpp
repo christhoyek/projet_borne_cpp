@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <sstream>
+#include <algorithm>
 #include <cstdio>
 
 BaseClient::BaseClient(const std::string& fichier)
@@ -17,44 +17,109 @@ void BaseClient::demanderRetraitCarte() const
     std::cout << "Carte retiree." << std::endl;
 }
 
-bool BaseClient::authentifier(int numcarte) const
+std::vector<Client> BaseClient::chargerClients() const
 {
+    std::vector<Client> clients;
     std::ifstream fichier(nomFichier);
+
     if (!fichier.is_open())
     {
-        return false;
+        return clients;
     }
 
-    int numero;
-    std::string nom, prenom;
-
-    while (fichier >> numero >> nom >> prenom)
+    Client client;
+    while (fichier >> client.numeroCarte >> client.nom >> client.prenom)
     {
-        if (numero == numcarte)
-        {
-            return true;
-        }
+        clients.push_back(client);
     }
 
-    return false;
+    return clients;
 }
 
-bool BaseClient::enregistrer(int numcarte, const std::string& nom, const std::string& prenom)
+bool BaseClient::sauvegarderClients(const std::vector<Client>& clients) const
 {
-    if (authentifier(numcarte))
-    {
-        return false;
-    }
-
-    std::ofstream fichier(nomFichier, std::ios::app);
+    std::ofstream fichier(nomFichier, std::ios::trunc);
     if (!fichier.is_open())
     {
         std::perror("Erreur ouverture baseclient.txt");
         return false;
     }
 
-    fichier << numcarte << " " << nom << " " << prenom << "\n";
+    for (const auto& client : clients)
+    {
+        fichier << client.numeroCarte << " "
+                << client.nom << " "
+                << client.prenom << "\n";
+    }
+
     return true;
+}
+
+std::vector<Client>::iterator BaseClient::trouverClient(std::vector<Client>& clients, int numcarte) const
+{
+    return std::find_if(clients.begin(), clients.end(),
+        [numcarte](const Client& client)
+        {
+            return client.numeroCarte == numcarte;
+        });
+}
+
+std::vector<Client>::const_iterator BaseClient::trouverClient(const std::vector<Client>& clients, int numcarte) const
+{
+    return std::find_if(clients.begin(), clients.end(),
+        [numcarte](const Client& client)
+        {
+            return client.numeroCarte == numcarte;
+        });
+}
+
+bool BaseClient::authentifier(int numcarte) const
+{
+    std::vector<Client> clients = chargerClients();
+    return trouverClient(clients, numcarte) != clients.end();
+}
+
+bool BaseClient::enregistrer(int numcarte, const std::string& nom, const std::string& prenom)
+{
+    std::vector<Client> clients = chargerClients();
+
+    if (trouverClient(clients, numcarte) != clients.end())
+    {
+        return false;
+    }
+
+    clients.push_back({numcarte, nom, prenom});
+    return sauvegarderClients(clients);
+}
+
+bool BaseClient::supprimer(int numcarte)
+{
+    std::vector<Client> clients = chargerClients();
+    auto it = trouverClient(clients, numcarte);
+
+    if (it == clients.end())
+    {
+        return false;
+    }
+
+    clients.erase(it);
+    return sauvegarderClients(clients);
+}
+
+bool BaseClient::modifier(int numcarte, const std::string& nom, const std::string& prenom)
+{
+    std::vector<Client> clients = chargerClients();
+    auto it = trouverClient(clients, numcarte);
+
+    if (it == clients.end())
+    {
+        return false;
+    }
+
+    it->nom = nom;
+    it->prenom = prenom;
+
+    return sauvegarderClients(clients);
 }
 
 bool BaseClient::interactiveEnregistrer(int numcarte)
@@ -90,112 +155,6 @@ bool BaseClient::interactiveEnregistrer(int numcarte)
 
     std::cout << "Echec enregistrement (deja present ou erreur)." << std::endl;
     demanderRetraitCarte();
-    return false;
-}
-
-bool BaseClient::supprimer(int numcarte)
-{
-    std::ifstream in(nomFichier);
-    if (!in.is_open())
-    {
-        return false;
-    }
-
-    std::ofstream out("baseclient.tmp");
-    if (!out.is_open())
-    {
-        return false;
-    }
-
-    int numero;
-    std::string nom, prenom;
-    bool removed = false;
-
-    while (in >> numero >> nom >> prenom)
-    {
-        if (numero == numcarte)
-        {
-            removed = true;
-            continue;
-        }
-
-        out << numero << " " << nom << " " << prenom << "\n";
-    }
-
-    in.close();
-    out.close();
-
-    if (removed)
-    {
-        if (std::remove(nomFichier.c_str()) != 0)
-        {
-            std::remove("baseclient.tmp");
-            return false;
-        }
-
-        if (std::rename("baseclient.tmp", nomFichier.c_str()) != 0)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    std::remove("baseclient.tmp");
-    return false;
-}
-
-bool BaseClient::modifier(int numcarte, const std::string& nom, const std::string& prenom)
-{
-    std::ifstream in(nomFichier);
-    if (!in.is_open())
-    {
-        return false;
-    }
-
-    std::ofstream out("baseclient.tmp");
-    if (!out.is_open())
-    {
-        return false;
-    }
-
-    int numero;
-    std::string ancienNom, ancienPrenom;
-    bool modified = false;
-
-    while (in >> numero >> ancienNom >> ancienPrenom)
-    {
-        if (numero == numcarte)
-        {
-            out << numcarte << " " << nom << " " << prenom << "\n";
-            modified = true;
-        }
-        else
-        {
-            out << numero << " " << ancienNom << " " << ancienPrenom << "\n";
-        }
-    }
-
-    in.close();
-    out.close();
-
-    if (modified)
-    {
-        if (std::remove(nomFichier.c_str()) != 0)
-        {
-            std::remove("baseclient.tmp");
-            return false;
-        }
-
-        if (std::rename("baseclient.tmp", nomFichier.c_str()) != 0)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    std::remove("baseclient.tmp");
     return false;
 }
 
@@ -251,4 +210,3 @@ bool BaseClient::interactiveModifier(int numcarte)
         return false;
     }
 }
-
