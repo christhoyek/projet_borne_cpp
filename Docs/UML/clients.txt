@@ -1,7 +1,0 @@
-15	Loris	Alexandre
-99	NOM	Prenom
-3	name	mooo
-85	test	dddd
-66	52	io
-52	azerty	iop
-8	Berthou	Pascal
